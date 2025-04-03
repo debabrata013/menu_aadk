@@ -12,38 +12,36 @@ import com.example.menu.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        enableEdgeToEdge()
-//        setContentView(R.layout.activity_main)
-       binding = ActivityMainBinding.inflate(layoutInflater)
+
+        // Inflate the layout using ViewBinding
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
+        // Set the Toolbar as the ActionBar
+        setSupportActionBar(binding.toolbar2)
     }
 
+    // Inflate the options menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.option_menu, menu)
         return true
-//        return super.onCreateOptionsMenu(menu)
     }
 
+    // Handle menu item clicks
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item!!.itemId) {
+        return when (item.itemId) {
             R.id.edit -> {
-                // Handle edit action
                 Toast.makeText(this, "Edit Clicked", Toast.LENGTH_SHORT).show()
-                return true
+                true
             }
             R.id.settings -> {
-                // Handle settings action
                 Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show()
-                return true
+                true
             }
-                // Handle settings action
-
+            else -> super.onOptionsItemSelected(item)
         }
-       return true
     }
 }
