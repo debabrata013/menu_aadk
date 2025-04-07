@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.menu.databinding.ActivityMainBinding
@@ -37,6 +38,28 @@ class MainActivity : AppCompatActivity() {
         binding.mylist.onItemClickListener = AdapterView.OnItemClickListener { _, view, position, _ ->
             selectedItemPosition = position // Store selected position
             openContextMenu(view) // Open context menu when an item is clicked
+        }
+
+        // Handle floating action button popup menu
+        binding.floatingActionButton.setOnClickListener {
+            // Create a PopupMenu
+            val popupMenu = PopupMenu(this, binding.floatingActionButton)
+            popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
+            popupMenu.show()
+
+            popupMenu.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.save -> {
+                        Toast.makeText(this, "Save Clicked", Toast.LENGTH_SHORT).show()
+                        true
+                    }
+                    R.id.share -> {
+                        Toast.makeText(this, "Share Clicked", Toast.LENGTH_SHORT).show()
+                        true
+                    }
+                    else -> false
+                }
+            }
         }
     }
 
@@ -72,7 +95,7 @@ class MainActivity : AppCompatActivity() {
     // Create a Context Menu for ListView
     override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
         super.onCreateContextMenu(menu, v, menuInfo)
-        if (v?.id == R.id.mylist) { // ✅ Correct ID check
+        if (v?.id == R.id.mylist) {
             menuInflater.inflate(R.menu.contextmenu, menu)
         }
     }
